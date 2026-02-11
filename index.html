@@ -31,7 +31,6 @@
       box-sizing:border-box;
     }
 
-
     h2{
       margin:6px 0 0 0;
       font-weight:700;
@@ -48,9 +47,10 @@
 
     #message{
       font-size:18px;
-      min-height:24px;
+      min-height:44px;           /* give 2 lines room */
       font-weight:600;
       margin:0;
+      white-space: pre-line;     /* IMPORTANT: enables \n line breaks */
     }
 
     .btnRow{
@@ -79,160 +79,5 @@
 
     button:active{ transform:scale(0.98); }
 
-    /* IMPORTANT: position with left, NOT transform */
     .bbt{
       background:#f44336;
-      color:white;
-      left:calc(50% - 150px);
-    }
-
-    .wes{
-      background:#4CAF50;
-      color:white;
-      left:calc(50% + 20px);
-    }
-
-    .heart{
-      position:fixed;
-      bottom:-30px;
-      font-size:22px;
-      pointer-events:none;
-      animation:floatUp 2.4s linear forwards;
-      z-index:999;
-    }
-
-    @keyframes floatUp{
-      from{ transform:translateY(0); opacity:1; }
-      to{ transform:translateY(-110vh); opacity:0; }
-    }
-
-    @media (max-height:700px){
-      h2{ font-size:20px; }
-      img{ max-height:44vh; }
-      #message{ font-size:16px; }
-      .btnRow{ height:70px; }
-      button{ padding:11px 20px; font-size:16px; }
-      .bbt{ left:calc(50% - 140px); }
-      .wes{ left:calc(50% + 16px); }
-    }
-
-    @media (max-height:600px){
-      img{ max-height:38vh; }
-      .btnRow{ height:64px; }
-      button{ padding:10px 18px; font-size:15px; }
-      .bbt{ left:calc(50% - 132px); }
-      .wes{ left:calc(50% + 14px); }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="card">
-    <h2>BBT or Wesley? 🥺</h2>
-
-    <img id="pic" src="photo2.jpg" alt="Photo">
-    <div id="message"></div>
-
-    <div class="btnRow" id="btnRow">
-      <button class="bbt" id="bbtBtn" type="button">BBT</button>
-      <button class="wes" id="wesBtn" type="button">WesWes</button>
-    </div>
-  </div>
-
-  <script>
-    let bbtClicks = 0;
-    let won = false;
-
-    const bbtPics = ["photo3.jpg", "photo4.jpg", "photo6.jpg", "photo7.jpg"];
-    let picIndex = 0;
-
-    let bbtScale = 1;
-    let wesScale = 1;
-
-    const sadLines = [
-      "You sure...? 🥺",
-      "Wesleak is watching... 😔",
-      "That kinda hurt you know 💔",
-      "BBT cannot hug you tight tight 🫠",
-      "Last chance to reconsider oi 😢"
-    ];
-
-    const picEl = document.getElementById("pic");
-    const msgEl = document.getElementById("message");
-    const bbtBtn = document.getElementById("bbtBtn");
-    const wesBtn = document.getElementById("wesBtn");
-    const btnRow = document.getElementById("btnRow");
-
-    // Attach listeners (more reliable than inline onclick on some mobile browsers)
-    bbtBtn.addEventListener("click", bbt);
-    wesBtn.addEventListener("click", wes);
-
-    function vibrate(ms){
-      if (navigator.vibrate) navigator.vibrate(ms);
-    }
-
-    function bbt(){
-      if (won) return;
-
-      bbtClicks++;
-
-      // Cycle images
-      picEl.src = bbtPics[picIndex];
-      picIndex = (picIndex + 1) % bbtPics.length;
-
-      // Sad line
-      msgEl.innerText = sadLines[Math.floor(Math.random() * sadLines.length)];
-      vibrate(40);
-
-      // Scale changes (transform now ONLY used for scaling)
-      bbtScale = Math.max(0.5, bbtScale - 0.15);
-      wesScale = Math.min(1.8, wesScale + 0.15);
-
-      bbtBtn.style.transform = `scale(${bbtScale})`;
-      wesBtn.style.transform = `scale(${wesScale})`;
-
-      if (bbtClicks >= 2) dodgeBBT();
-    }
-
-    function dodgeBBT(){
-      const rowRect = btnRow.getBoundingClientRect();
-
-      const maxX = Math.max(0, rowRect.width - bbtBtn.offsetWidth);
-      const maxY = Math.max(0, rowRect.height - bbtBtn.offsetHeight);
-
-      const x = Math.floor(Math.random() * maxX);
-      const y = Math.floor(Math.random() * maxY);
-
-      // Since button is absolute, set left/top directly within the row
-      bbtBtn.style.left = x + "px";
-      bbtBtn.style.top = y + "px";
-    }
-
-    function spawnHearts(count=22){
-      for (let i=0;i<count;i++){
-        const h=document.createElement("div");
-        h.className="heart";
-        h.textContent = (Math.random() > 0.2) ? "❤️" : "💖";
-        h.style.left = Math.floor(Math.random()*100) + "vw";
-        h.style.fontSize = (16 + Math.floor(Math.random()*22)) + "px";
-        h.style.animationDuration = (1.8 + Math.random()*1.6) + "s";
-        document.body.appendChild(h);
-        setTimeout(()=>h.remove(),3500);
-      }
-    }
-
-    function wes(){
-      won = true;
-
-      picEl.src = "photo5.jpg";
-      msgEl.innerText = "Correct answer ❤️<br>WesWes loves u many many 😌";
-
-      vibrate([80,40,120]);
-      spawnHearts(26);
-
-      bbtBtn.style.display = "none";
-      wesBtn.style.display = "none";
-    }
-  </script>
-</body>
-</html>
