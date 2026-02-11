@@ -147,87 +147,97 @@
     </div>
   </div>
 
-  <script>
-    let toggle = false;
-    let bbtClicks = 0;
-    let won = false;
+<script>
+  let bbtClicks = 0;
+  let won = false;
 
-    const sadLines = [
-      "You sure...? 🥺",
-      "WesWes is watching... 😔",
-      "That kinda hurt you know 💔",
-      "BBT cannot hug you like this 🫠",
-      "Last chance to reconsider 😢"
-    ];
+  const bbtPics = ["photo3.jpg", "photo4.jpg", "photo6.jpg", "photo7.jpg"];
+  let picIndex = 0;
 
-    function vibrate(ms) {
-      if (navigator.vibrate) navigator.vibrate(ms);
+  let bbtScale = 1;
+  let wesScale = 1;
+
+  const sadLines = [
+    "You sure...? 🥺",
+    "Wesleak is watching... 😔",
+    "That kinda hurt you know 💔",
+    "BBT cannot hug you tight tight 🫠",
+    "Last chance to reconsider oi 😢"
+  ];
+
+  function vibrate(ms) {
+    if (navigator.vibrate) navigator.vibrate(ms);
+  }
+
+  function bbt() {
+    if (won) return;
+
+    bbtClicks++;
+
+    // Cycle images
+    document.getElementById("pic").src = bbtPics[picIndex];
+    picIndex = (picIndex + 1) % bbtPics.length;
+
+    // Sad line
+    const randomLine = sadLines[Math.floor(Math.random() * sadLines.length)];
+    document.getElementById("message").innerText = randomLine;
+
+    vibrate(40);
+
+    // Shrink BBT / Grow WesWes
+    bbtScale = Math.max(0.55, bbtScale - 0.08);   // don't disappear completely
+    wesScale = Math.min(1.6, wesScale + 0.08);   // cap growth
+
+    document.getElementById("bbtBtn").style.transform = `scale(${bbtScale})`;
+    document.getElementById("wesBtn").style.transform = `scale(${wesScale})`;
+
+    // After 3 clicks, BBT dodges
+    if (bbtClicks >= 3) dodgeBBT();
+  }
+
+  function dodgeBBT() {
+    const btn = document.getElementById("bbtBtn");
+    const row = document.getElementById("btnRow");
+    const rowRect = row.getBoundingClientRect();
+
+    const maxX = Math.max(0, rowRect.width - btn.offsetWidth);
+    const maxY = Math.max(0, rowRect.height - btn.offsetHeight);
+
+    const x = Math.floor(Math.random() * maxX);
+    const y = Math.floor(Math.random() * maxY);
+
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+  }
+
+  function spawnHearts(count = 22) {
+    for (let i = 0; i < count; i++) {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = (Math.random() > 0.2) ? "❤️" : "💖";
+      h.style.left = Math.floor(Math.random() * 100) + "vw";
+      h.style.fontSize = (16 + Math.floor(Math.random() * 22)) + "px";
+      h.style.animationDuration = (1.8 + Math.random() * 1.6) + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 3500);
     }
+  }
 
-    function bbt() {
-      if (won) return;
+  function wes() {
+    won = true;
 
-      bbtClicks++;
-      toggle = !toggle;
+    document.getElementById("pic").src = "photo5.jpg";
+    document.getElementById("message").innerText = "Correct answer ❤️ WesWes loves u many many 😌";
 
-      // Cycle Image (3) and Image (4)
-      document.getElementById("pic").src = toggle ? "photo3.jpg" : "photo4.jpg";
+    vibrate([80, 40, 120]);
+    spawnHearts(26);
 
-      // Random sad cute line
-      const randomLine = sadLines[Math.floor(Math.random() * sadLines.length)];
-      document.getElementById("message").innerText = randomLine;
+    document.getElementById("bbtBtn").style.display = "none";
+    document.getElementById("wesBtn").style.display = "none";
+  }
+</script>
 
-      // Subtle vibration
-      vibrate(40);
 
-      // After 3 clicks, BBT dodges
-      if (bbtClicks >= 3) dodgeBBT();
-    }
-
-    function dodgeBBT() {
-      const btn = document.getElementById("bbtBtn");
-      const row = document.getElementById("btnRow");
-      const rowRect = row.getBoundingClientRect();
-
-      const maxX = Math.max(0, rowRect.width - btn.offsetWidth);
-      const maxY = Math.max(0, rowRect.height - btn.offsetHeight);
-
-      const x = Math.floor(Math.random() * maxX);
-      const y = Math.floor(Math.random() * maxY);
-
-      btn.style.left = x + "px";
-      btn.style.top = y + "px";
-      btn.style.transform = "none";
-    }
-
-    function spawnHearts(count = 22) {
-      for (let i = 0; i < count; i++) {
-        const h = document.createElement("div");
-        h.className = "heart";
-        h.textContent = (Math.random() > 0.2) ? "❤️" : "💖";
-        h.style.left = Math.floor(Math.random() * 100) + "vw";
-        h.style.fontSize = (16 + Math.floor(Math.random() * 22)) + "px";
-        h.style.animationDuration = (1.8 + Math.random() * 1.6) + "s";
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 3500);
-      }
-    }
-
-    function wes() {
-      won = true;
-
-      // Win image = Image (5)
-      document.getElementById("pic").src = "photo5.jpg";
-      document.getElementById("message").innerText = "Correct answer ❤️ WesWes loves u many many 😌";
-
-      vibrate([80, 40, 120]);
-      spawnHearts(26);
-
-      // Hide buttons
-      document.getElementById("bbtBtn").style.display = "none";
-      document.getElementById("wesBtn").style.display = "none";
-    }
-  </script>
 </body>
 </html>
 
