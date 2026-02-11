@@ -169,28 +169,38 @@
       if (navigator.vibrate) navigator.vibrate(ms);
     }
 
-    function bbt(){
-      if (won) return;
+function bbt(){
+  if (won) return;
 
-      bbtClicks++;
+  bbtClicks++;
 
-      // Cycle images
-      picEl.src = bbtPics[picIndex];
-      picIndex = (picIndex + 1) % bbtPics.length;
+  // Cycle images
+  picEl.src = bbtPics[picIndex];
+  picIndex = (picIndex + 1) % bbtPics.length;
 
-      // Sad line
-      msgEl.innerText = sadLines[Math.floor(Math.random() * sadLines.length)];
-      vibrate(40);
+  // Sad line
+  msgEl.innerText = sadLines[Math.floor(Math.random() * sadLines.length)];
+  vibrate(40);
 
-      // Shrink BBT / Grow WesWes
-      bbtScale = Math.max(0.1, bbtScale - 0.15);
-      wesScale = Math.min(1.8, wesScale + 0.15);
+  // Normal shrink before 8 clicks
+  if (bbtClicks < 8) {
+    bbtScale = bbtScale * 0.75;
+  }
 
-      bbtBtn.style.transform = `scale(${bbtScale})`;
-      wesBtn.style.transform = `scale(${wesScale})`;
+  // After 8 clicks → nearly impossible
+  if (bbtClicks >= 8) {
+    bbtScale = 0.05;  // super tiny but visible
+    bbtBtn.style.opacity = "0.6";  // faint but still there
+  }
 
-      if (bbtClicks >= 2) dodgeBBT();
-    }
+  wesScale = Math.min(2.2, wesScale + 0.2);
+
+  bbtBtn.style.transform = `scale(${bbtScale})`;
+  wesBtn.style.transform = `scale(${wesScale})`;
+
+  if (bbtClicks >= 2) dodgeBBT();
+}
+
 
     // Dodge but never overlap WesWes. Stop after 8 tries.
     function dodgeBBT(){
