@@ -4,130 +4,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Very Important Decision</title>
 
-  <!-- Cute font -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Make everything fit on one screen */
-    body {
-      font-family: 'Quicksand', sans-serif;
-      text-align: center;
-      background: #EFE6FF; /* soft pastel lavender */
-      margin: 0;
-      padding: 14px;
-      height: 100vh;
+    body{
+      font-family:'Quicksand',sans-serif;
+      text-align:center;
+      background:#EFE6FF;
+      margin:0;
+      padding:14px;
+      height:100vh;
     }
 
-    .card {
-      max-width: 520px;
-      margin: 0 auto;
-      height: calc(100vh - 28px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 14px;
-      background: rgba(255,255,255,0.65);
-      border-radius: 18px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      box-sizing: border-box;
+    .card{
+      max-width:520px;
+      margin:0 auto;
+      height:calc(100vh - 28px);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px;
+      background:rgba(255,255,255,0.65);
+      border-radius:18px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.08);
+      box-sizing:border-box;
     }
 
-    h2 {
-      margin: 6px 0 0 0;
-      font-weight: 700;
-      font-size: 22px;
-      line-height: 1.1;
+    h2{
+      margin:6px 0 0 0;
+      font-weight:700;
+      font-size:22px;
+      line-height:1.1;
     }
 
-    /* Image will shrink to fit available space */
-    img {
-      width: 100%;
-      max-height: 48vh;          /* key: keeps buttons visible */
-      object-fit: contain;       /* no cropping */
-      border-radius: 14px;
+    img{
+      width:100%;
+      max-height:48vh;
+      object-fit:contain;
+      border-radius:14px;
     }
 
-    #message {
-      font-size: 18px;
-      min-height: 24px;
-      font-weight: 600;
-      margin: 0;
+    #message{
+      font-size:18px;
+      min-height:24px;
+      font-weight:600;
+      margin:0;
     }
 
-    .btnRow {
-      position: relative;
-      height: 74px;   /* smaller so it fits on short screens */
-      margin-top: 2px;
-      flex-shrink: 0;
+    .btnRow{
+      position:relative;
+      height:74px;
+      margin-top:2px;
+      flex-shrink:0;
     }
 
-    button {
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 700;
-      padding: 12px 22px;
-      font-size: 17px;
-      border-radius: 12px;
-      border: none;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.10);
-      cursor: pointer;
-      transition: transform 0.08s ease;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
+    button{
+      font-family:'Quicksand',sans-serif;
+      font-weight:700;
+      padding:12px 22px;
+      font-size:17px;
+      border-radius:12px;
+      border:none;
+      box-shadow:0 6px 14px rgba(0,0,0,0.10);
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color:transparent;
+      transition:transform 0.12s ease;
+      position:absolute;
+      top:8px;
+      transform-origin:center;
     }
 
-    button:active { transform: scale(0.98); }
+    button:active{ transform:scale(0.98); }
 
-    .bbt {
-      background: #f44336;
-      color: white;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-128px);
-      top: 8px;
+    /* IMPORTANT: position with left, NOT transform */
+    .bbt{
+      background:#f44336;
+      color:white;
+      left:calc(50% - 150px);
     }
 
-    .wes {
-      background: #4CAF50;
-      color: white;
-      position: absolute;
-      left: 50%;
-      transform: translateX(20px);
-      top: 8px;
+    .wes{
+      background:#4CAF50;
+      color:white;
+      left:calc(50% + 20px);
     }
 
-    /* Floating hearts */
-    .heart {
-      position: fixed;
-      bottom: -30px;
-      font-size: 22px;
-      pointer-events: none;
-      animation: floatUp 2.4s linear forwards;
-      z-index: 999;
+    .heart{
+      position:fixed;
+      bottom:-30px;
+      font-size:22px;
+      pointer-events:none;
+      animation:floatUp 2.4s linear forwards;
+      z-index:999;
     }
 
-    @keyframes floatUp {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-110vh); opacity: 0; }
+    @keyframes floatUp{
+      from{ transform:translateY(0); opacity:1; }
+      to{ transform:translateY(-110vh); opacity:0; }
     }
 
-    /* Extra safety for very small phones */
-    @media (max-height: 700px) {
-      h2 { font-size: 20px; }
-      img { max-height: 44vh; }
-      #message { font-size: 16px; }
-      .btnRow { height: 70px; }
-      button { padding: 11px 20px; font-size: 16px; }
-      .bbt { transform: translateX(-120px); }
-      .wes { transform: translateX(18px); }
+    @media (max-height:700px){
+      h2{ font-size:20px; }
+      img{ max-height:44vh; }
+      #message{ font-size:16px; }
+      .btnRow{ height:70px; }
+      button{ padding:11px 20px; font-size:16px; }
+      .bbt{ left:calc(50% - 140px); }
+      .wes{ left:calc(50% + 16px); }
     }
 
-    @media (max-height: 600px) {
-      img { max-height: 38vh; }
-      .btnRow { height: 64px; }
-      button { padding: 10px 18px; font-size: 15px; }
-      .bbt { transform: translateX(-112px); }
-      .wes { transform: translateX(16px); }
+    @media (max-height:600px){
+      img{ max-height:38vh; }
+      .btnRow{ height:64px; }
+      button{ padding:10px 18px; font-size:15px; }
+      .bbt{ left:calc(50% - 132px); }
+      .wes{ left:calc(50% + 14px); }
     }
   </style>
 </head>
@@ -136,108 +129,109 @@
   <div class="card">
     <h2>BBT or Wesley? 🥺</h2>
 
-    <!-- Start image = Image (2) -->
     <img id="pic" src="photo2.jpg" alt="Photo">
-
     <div id="message"></div>
 
     <div class="btnRow" id="btnRow">
-      <button class="bbt" id="bbtBtn" onclick="bbt()">BBT</button>
-      <button class="wes" id="wesBtn" onclick="wes()">WesWes</button>
+      <button class="bbt" id="bbtBtn" type="button">BBT</button>
+      <button class="wes" id="wesBtn" type="button">WesWes</button>
     </div>
   </div>
 
-<script>
-  let bbtClicks = 0;
-  let won = false;
+  <script>
+    let bbtClicks = 0;
+    let won = false;
 
-  const bbtPics = ["photo3.jpg", "photo4.jpg", "photo6.jpg", "photo7.jpg"];
-  let picIndex = 0;
+    const bbtPics = ["photo3.jpg", "photo4.jpg", "photo6.jpg", "photo7.jpg"];
+    let picIndex = 0;
 
-  let bbtScale = 1;
-  let wesScale = 1;
+    let bbtScale = 1;
+    let wesScale = 1;
 
-  const sadLines = [
-    "You sure...? 🥺",
-    "Wesleak is watching... 😔",
-    "That kinda hurt you know 💔",
-    "BBT cannot hug you tight tight 🫠",
-    "Last chance to reconsider oi 😢"
-  ];
+    const sadLines = [
+      "You sure...? 🥺",
+      "Wesleak is watching... 😔",
+      "That kinda hurt you know 💔",
+      "BBT cannot hug you tight tight 🫠",
+      "Last chance to reconsider oi 😢"
+    ];
 
-  function vibrate(ms) {
-    if (navigator.vibrate) navigator.vibrate(ms);
-  }
+    const picEl = document.getElementById("pic");
+    const msgEl = document.getElementById("message");
+    const bbtBtn = document.getElementById("bbtBtn");
+    const wesBtn = document.getElementById("wesBtn");
+    const btnRow = document.getElementById("btnRow");
 
-  function bbt() {
-    if (won) return;
+    // Attach listeners (more reliable than inline onclick on some mobile browsers)
+    bbtBtn.addEventListener("click", bbt);
+    wesBtn.addEventListener("click", wes);
 
-    bbtClicks++;
-
-    // Cycle images
-    document.getElementById("pic").src = bbtPics[picIndex];
-    picIndex = (picIndex + 1) % bbtPics.length;
-
-    // Sad line
-    const randomLine = sadLines[Math.floor(Math.random() * sadLines.length)];
-    document.getElementById("message").innerText = randomLine;
-
-    vibrate(40);
-
-    // Shrink BBT / Grow WesWes
-    bbtScale = Math.max(0.55, bbtScale - 0.08);   // don't disappear completely
-    wesScale = Math.min(1.6, wesScale + 0.08);   // cap growth
-
-    document.getElementById("bbtBtn").style.transform = `scale(${bbtScale})`;
-    document.getElementById("wesBtn").style.transform = `scale(${wesScale})`;
-
-    // After 3 clicks, BBT dodges
-    if (bbtClicks >= 3) dodgeBBT();
-  }
-
-  function dodgeBBT() {
-    const btn = document.getElementById("bbtBtn");
-    const row = document.getElementById("btnRow");
-    const rowRect = row.getBoundingClientRect();
-
-    const maxX = Math.max(0, rowRect.width - btn.offsetWidth);
-    const maxY = Math.max(0, rowRect.height - btn.offsetHeight);
-
-    const x = Math.floor(Math.random() * maxX);
-    const y = Math.floor(Math.random() * maxY);
-
-    btn.style.left = x + "px";
-    btn.style.top = y + "px";
-  }
-
-  function spawnHearts(count = 22) {
-    for (let i = 0; i < count; i++) {
-      const h = document.createElement("div");
-      h.className = "heart";
-      h.textContent = (Math.random() > 0.2) ? "❤️" : "💖";
-      h.style.left = Math.floor(Math.random() * 100) + "vw";
-      h.style.fontSize = (16 + Math.floor(Math.random() * 22)) + "px";
-      h.style.animationDuration = (1.8 + Math.random() * 1.6) + "s";
-      document.body.appendChild(h);
-      setTimeout(() => h.remove(), 3500);
+    function vibrate(ms){
+      if (navigator.vibrate) navigator.vibrate(ms);
     }
-  }
 
-  function wes() {
-    won = true;
+    function bbt(){
+      if (won) return;
 
-    document.getElementById("pic").src = "photo5.jpg";
-    document.getElementById("message").innerText = "Correct answer ❤️ WesWes loves u many many 😌";
+      bbtClicks++;
 
-    vibrate([80, 40, 120]);
-    spawnHearts(26);
+      // Cycle images
+      picEl.src = bbtPics[picIndex];
+      picIndex = (picIndex + 1) % bbtPics.length;
 
-    document.getElementById("bbtBtn").style.display = "none";
-    document.getElementById("wesBtn").style.display = "none";
-  }
-</script>
+      // Sad line
+      msgEl.innerText = sadLines[Math.floor(Math.random() * sadLines.length)];
+      vibrate(40);
 
+      // Scale changes (transform now ONLY used for scaling)
+      bbtScale = Math.max(0.5, bbtScale - 0.2);
+      wesScale = Math.min(1.8, wesScale + 0.2);
 
+      bbtBtn.style.transform = `scale(${bbtScale})`;
+      wesBtn.style.transform = `scale(${wesScale})`;
+
+      if (bbtClicks >= 2) dodgeBBT();
+    }
+
+    function dodgeBBT(){
+      const rowRect = btnRow.getBoundingClientRect();
+
+      const maxX = Math.max(0, rowRect.width - bbtBtn.offsetWidth);
+      const maxY = Math.max(0, rowRect.height - bbtBtn.offsetHeight);
+
+      const x = Math.floor(Math.random() * maxX);
+      const y = Math.floor(Math.random() * maxY);
+
+      // Since button is absolute, set left/top directly within the row
+      bbtBtn.style.left = x + "px";
+      bbtBtn.style.top = y + "px";
+    }
+
+    function spawnHearts(count=22){
+      for (let i=0;i<count;i++){
+        const h=document.createElement("div");
+        h.className="heart";
+        h.textContent = (Math.random() > 0.2) ? "❤️" : "💖";
+        h.style.left = Math.floor(Math.random()*100) + "vw";
+        h.style.fontSize = (16 + Math.floor(Math.random()*22)) + "px";
+        h.style.animationDuration = (1.8 + Math.random()*1.6) + "s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),3500);
+      }
+    }
+
+    function wes(){
+      won = true;
+
+      picEl.src = "photo5.jpg";
+      msgEl.innerText = "Correct answer ❤️ WesWes loves u many many 😌";
+
+      vibrate([80,40,120]);
+      spawnHearts(26);
+
+      bbtBtn.style.display = "none";
+      wesBtn.style.display = "none";
+    }
+  </script>
 </body>
 </html>
-
